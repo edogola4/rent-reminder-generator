@@ -375,7 +375,7 @@ If you have already made your payment, kindly disregard this notice and provide 
 if __name__ == "__main__":
     # Example usage with customization options
     create_rent_reminder(
-        resident_name="Jane Doe",  # Change to specific name or leave as "Resident"
+        resident_name="Bran Don",  # Change to specific name or leave as "Resident"
         room_number="B-204",       # Optional room number
         amount_due="15,000",       # Optional amount due
         due_date="10th"            # Default is 10th
