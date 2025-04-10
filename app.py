@@ -8,8 +8,8 @@ import random
 
 app = Flask(__name__)
 
-def get_logo(local_path="static/parkview_logo.png", 
-             download_url="https://placehold.co/200x100/789/fff?text=Parkview"):
+def get_logo(local_path="static/brandon_logo.png", 
+             download_url="https://placehold.co/200x100/789/fff?text=Brandon"):
     """
     Attempts to load the logo from a local file.
     If the file doesn't exist, downloads a placeholder from the provided URL.
@@ -117,13 +117,13 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
         )
         draw.text(
             (fallback_x + 10, fallback_y + 10),
-            "Parkview",
+            "Brandon",
             fill='white',
             font=subheader_font
         )
     
     # Draw the main header text on the right
-    org_text = "Parkview Apartments\nQuality Living Spaces"
+    org_text = "Brandon Apartments\nQuality Living Spaces"
     org_lines = org_text.split("\n")
     line_y = margin_top - 30 * scale_factor // 3
     for line in org_lines:
@@ -190,11 +190,11 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     address_start_y = content_start_y + 40 * scale_factor // 3
     
     address_lines = [
-        "Parkview Apartments",
+        "Brandon Apartments",
         "123 Maple Avenue",
         "P.O. Box 45678, Cityville",
         "Tel: (555) 123-4567",
-        "Email: info@parkviewapts.com"
+        "Email: info@brandonapts.com"
     ]
     
     for line in address_lines:
@@ -245,14 +245,14 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     body_text = f"""This is a formal reminder that your rent payment for the current month is due by the {due_date} of this month."""
     
     if amount_due:
-        body_text += f" The amount due is ${amount_due}."
+        body_text += f" The amount due is KSH{amount_due}."
     
     body_text += """
 
 Please ensure your payment is submitted on time to avoid any late fee charges that may be applicable according to your lease agreement.
 
 Payment can be made through the following methods:
-• Online payment portal: www.parkviewapts.com/pay
+• Online payment portal: www.brandonapts.com/pay
 • Direct deposit to our bank account
 • Check payment at the management office during office hours
 
@@ -298,12 +298,12 @@ If you have already made your payment, kindly disregard this notice and provide 
     
     # Add signature space
     content_start_y += 80 * scale_factor // 3
-    signature_text = "Parkview Apartments Management"
+    signature_text = "Brandon Apartments Management"
     draw.text((margin_left, content_start_y), signature_text, fill=black, font=text_font)
     
     # Add a manager name and title
     content_start_y += 25 * scale_factor // 3
-    manager_text = "John Smith\nProperty Manager"
+    manager_text = "Bran Don\nProperty Manager"
     draw.text((margin_left, content_start_y), manager_text, fill=black, font=small_font)
     
     # ----------------------------
@@ -514,6 +514,10 @@ if __name__ == '__main__':
             color: #666;
         }
     </style>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
     <div class="container">
