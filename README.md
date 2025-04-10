@@ -1,19 +1,15 @@
-# YWCA Rent Reminder Generator
-
-## NOT OFFICIAL OR AFFILIATED WITH YWCA....I JUST USED THEIR NAME SINCE I'M A RESIDENT AND I'M WORKING ON A SCHOOL PROJECT
+# ResidenceReminder
 
 ## Overview
-The YWCA Rent Reminder Generator is a simple Flask web application that creates professional rent reminder notices in the form of downloadable image files. This tool was created to help streamline the rent reminder process for hostel management.
-
-## Acknowledgment
-This project uses the YWCA Kenya name and logo for demonstration purposes only. I would like to express my gratitude to the YWCA Hostels in Nairobi where I stayed during my time in Kenya. The supportive environment and services provided by YWCA inspired this project. This application is not officially affiliated with or endorsed by YWCA Kenya or YWCA Hostels.
+ResidenceReminder is a Flask-based web application that creates professional rent reminder notices for property managers and landlords. The application generates high-quality, downloadable PNG images that can be printed or emailed to residents.
 
 ## Features
-- Generates formal rent reminder notices as high-quality PNG images
-- Customizable fields: resident name, room number, amount due, and payment due date
+- Creates formal rent reminder notices with professional letterhead design
+- Customizable fields: resident name, unit number, amount due, and payment due date
 - Preview functionality before downloading
-- Professional letterhead design with YWCA branding elements
-- Responsive web interface
+- High-resolution output (300 DPI) suitable for printing
+- Responsive web interface for use on various devices
+- Automatic logo handling with placeholder fallback
 
 ## Installation
 
@@ -25,8 +21,8 @@ This project uses the YWCA Kenya name and logo for demonstration purposes only. 
 ### Setup
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/ywca-rent-reminder.git
-   cd ywca-rent-reminder
+   git clone https://github.com/yourusername/residence-reminder.git
+   cd residence-reminder
    ```
 
 2. Create a virtual environment (recommended):
@@ -53,35 +49,54 @@ This project uses the YWCA Kenya name and logo for demonstration purposes only. 
 ## Usage
 1. Fill in the form with relevant details:
    - Resident Name
-   - Room/Unit Number
-   - Amount Due (in KES)
+   - Unit Number
+   - Amount Due (in $)
    - Due Date
 
 2. Click "Preview Notice" to see how the reminder will look
 
 3. Click "Download Notice" to download the notice as a PNG file
 
+## Customization
+- To change the default property name, edit the variables in the script:
+  - `org_text` variable in the `create_rent_reminder` function
+  - `address_lines` list in the same function
+- To use your own logo, place it in the `static` directory as `parkview_logo.png`
+- Font and color schemes can be modified in the respective variables
+
 ## Technical Details
 - Built with Flask web framework
 - Uses Pillow (PIL) for image generation
 - Auto-creates necessary directories and templates on first run
-- Implements responsive web design
-- Generates high-resolution (300 DPI) notices suitable for printing
+- Uses responsive design for better user experience across devices
+- Generates professional-looking documents with subtle design details like watermarks and texture
 
 ## Project Structure
 ```
-ywca-rent-reminder/
+residence-reminder/
 │
 ├── app.py              # Main application file
 ├── static/             # Static files directory
-│   └── ywca_logo.png   # Logo file (downloaded if not present)
+│   └── parkview_logo.png   # Logo file (downloaded if not present)
 ├── templates/          # Templates directory
 │   └── index.html      # Main HTML form template
 └── README.md           # This file
 ```
 
-## License
-This project is for educational and personal use only. Any commercial use or redistribution requires permission from the developer and should respect YWCA Kenya's branding rights.
+## Use Case: Parkview Apartments
+The default configuration uses "Parkview Apartments" as an example implementation. The system can be easily customized for any residential property by modifying the property name, logo, and contact information.
 
-## Disclaimer
-This software is provided "as is", without warranty of any kind. The YWCA name and logo are used with respect and admiration for the organization's work in empowering women and providing quality accommodation services.
+## License
+This project is open source and available under the MIT License.
+
+## Credits
+- Created by [Your Name]
+- Inspired by the need for streamlined property management communications
+- Uses Flask, PIL, and other open-source libraries
+
+## Future Enhancements
+- Multiple notice templates (payment confirmation, maintenance alerts)
+- Email integration for direct sending
+- User accounts for property managers
+- Resident database integration
+- Multilingual support

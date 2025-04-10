@@ -8,11 +8,11 @@ import random
 
 app = Flask(__name__)
 
-def get_logo(local_path="static/parkview_logo.png", 
-             download_url="https://placehold.co/200x100/789/fff?text=Parkview"):
+def get_logo(local_path="static/ywca_logo.png", 
+             download_url="https://ywcanairobi.org/wp-content/uploads/2022/05/YWCA-logo.png"):
     """
     Attempts to load the logo from a local file.
-    If the file doesn't exist, downloads a placeholder from the provided URL.
+    If the file doesn't exist, tries to download it from the provided URL.
     """
     # Make sure the static directory exists
     os.makedirs('static', exist_ok=True)
@@ -33,7 +33,7 @@ def get_logo(local_path="static/parkview_logo.png",
         print(f"Could not download logo from URL: {e}")
         return None
 
-def create_rent_reminder(resident_name="Resident", unit_number="", amount_due="", due_date="1st"):
+def create_rent_reminder(resident_name="Resident", room_number="", amount_due="", due_date="10th"):
     """
     Creates a formal rent reminder notice styled like an A4 letter.
     Returns the image as a BytesIO object.
@@ -53,8 +53,8 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     margin_bottom = 240 * scale_factor // 4
     
     # Colors
-    accent_color = (51, 102, 153)       # Parkview blue
-    light_gray   = (230, 230, 230)      # Divider lines
+    accent_color = (0, 85, 164)       # YWCA blue
+    light_gray   = (230, 230, 230)    # Divider lines
     black        = (0, 0, 0)
     
     # Try to use professional serif fonts
@@ -117,13 +117,13 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
         )
         draw.text(
             (fallback_x + 10, fallback_y + 10),
-            "Parkview",
+            "YWCA",
             fill='white',
             font=subheader_font
         )
     
     # Draw the main header text on the right
-    org_text = "Parkview Apartments\nQuality Living Spaces"
+    org_text = "YWCA Kenya\nEmpowering Women, Transforming Communities"
     org_lines = org_text.split("\n")
     line_y = margin_top - 30 * scale_factor // 3
     for line in org_lines:
@@ -161,7 +161,7 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     
     # Add a reference number and date at the top right of content area
     current_date = datetime.now().strftime("%d/%m/%Y")
-    ref_num = f"RN/{random.randint(1000, 9999)}/{datetime.now().year}"
+    ref_num = f"RMR/{random.randint(1000, 9999)}/{datetime.now().year}"
     
     date_text = f"Date: {current_date}"
     ref_text = f"Reference: {ref_num}"
@@ -190,11 +190,11 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     address_start_y = content_start_y + 40 * scale_factor // 3
     
     address_lines = [
-        "Parkview Apartments",
-        "123 Maple Avenue",
-        "P.O. Box 45678, Cityville",
-        "Tel: (555) 123-4567",
-        "Email: info@parkviewapts.com"
+        "YWCA Hostels",
+        "Mamlaka Road, Nairobi",
+        "P.O. Box 40112-00100, Nairobi, Kenya",
+        "Tel: +254 (0) 20 2724789",
+        "Email: info@ywcahostels.co.ke"
     ]
     
     for line in address_lines:
@@ -207,8 +207,8 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     content_start_y = address_start_y + 60 * scale_factor // 3
     
     # Resident information in a subtle box
-    if unit_number:
-        resident_info = f"Unit Number: {unit_number}"
+    if room_number:
+        resident_info = f"Room/Unit: {room_number}"
         if resident_name and resident_name.lower() != "resident":
             resident_info = f"Resident: {resident_name}\n{resident_info}"
         
@@ -245,16 +245,16 @@ def create_rent_reminder(resident_name="Resident", unit_number="", amount_due=""
     body_text = f"""This is a formal reminder that your rent payment for the current month is due by the {due_date} of this month."""
     
     if amount_due:
-        body_text += f" The amount due is ${amount_due}."
+        body_text += f" The amount due is KES {amount_due}."
     
     body_text += """
 
-Please ensure your payment is submitted on time to avoid any late fee charges that may be applicable according to your lease agreement.
+Please ensure your payment is submitted on time to avoid any late fee charges that may be applicable according to your tenancy agreement.
 
 Payment can be made through the following methods:
-• Online payment portal: www.parkviewapts.com/pay
+• M-Pesa Paybill: 123456, Account: Your Room Number
 • Direct deposit to our bank account
-• Check payment at the management office during office hours
+• Cash payment at the management office during office hours
 
 If you have already made your payment, kindly disregard this notice and provide proof of payment to the management office for our records.
 """
@@ -298,12 +298,12 @@ If you have already made your payment, kindly disregard this notice and provide 
     
     # Add signature space
     content_start_y += 80 * scale_factor // 3
-    signature_text = "Parkview Apartments Management"
+    signature_text = "YWCA Hostels Management"
     draw.text((margin_left, content_start_y), signature_text, fill=black, font=text_font)
     
     # Add a manager name and title
     content_start_y += 25 * scale_factor // 3
-    manager_text = "John Smith\nProperty Manager"
+    manager_text = "Mary Wanjiku\nHostel Manager"
     draw.text((margin_left, content_start_y), manager_text, fill=black, font=small_font)
     
     # ----------------------------
@@ -317,7 +317,7 @@ If you have already made your payment, kindly disregard this notice and provide 
     
     # Footer text with disclaimer and reference number
     footer_text = "This is an automated notice generated by our system. If you have questions, please contact the management office."
-    ref_str = f"Ref: PV-RR-{datetime.now().year}-{random.randint(100, 999)}"
+    ref_str = f"Ref: YWCA-RR-{datetime.now().year}-{random.randint(100, 999)}"
     
     # Print date at bottom-left
     bbox = draw.textbbox((0, 0), footer_text, font=footer_font)
@@ -377,14 +377,14 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate_reminder():
     resident_name = request.form.get('resident_name', 'Resident')
-    unit_number = request.form.get('unit_number', '')
+    room_number = request.form.get('room_number', '')
     amount_due = request.form.get('amount_due', '')
-    due_date = request.form.get('due_date', '1st')
+    due_date = request.form.get('due_date', '10th')
     
     # Generate the notice image
     img_io = create_rent_reminder(
         resident_name=resident_name,
-        unit_number=unit_number,
+        room_number=room_number,
         amount_due=amount_due,
         due_date=due_date
     )
@@ -400,14 +400,14 @@ def generate_reminder():
 @app.route('/preview', methods=['POST'])
 def preview_reminder():
     resident_name = request.form.get('resident_name', 'Resident')
-    unit_number = request.form.get('unit_number', '')
+    room_number = request.form.get('room_number', '')
     amount_due = request.form.get('amount_due', '')
-    due_date = request.form.get('due_date', '1st')
+    due_date = request.form.get('due_date', '10th')
     
     # Generate the notice image but serve it directly for preview
     img_io = create_rent_reminder(
         resident_name=resident_name,
-        unit_number=unit_number,
+        room_number=room_number,
         amount_due=amount_due,
         due_date=due_date
     )
@@ -432,7 +432,7 @@ if __name__ == '__main__':
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResidenceReminder - Rent Notice Generator</title>
+    <title>YWCA Rent Reminder Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -451,7 +451,7 @@ if __name__ == '__main__':
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #336699;
+            color: #0055a4;
             text-align: center;
             margin-bottom: 30px;
         }
@@ -476,7 +476,7 @@ if __name__ == '__main__':
             margin-top: 20px;
         }
         button {
-            background-color: #336699;
+            background-color: #0055a4;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -485,7 +485,7 @@ if __name__ == '__main__':
             font-size: 16px;
         }
         button:hover {
-            background-color: #264d73;
+            background-color: #003d7a;
         }
         .preview {
             margin-top: 30px;
@@ -518,9 +518,9 @@ if __name__ == '__main__':
 <body>
     <div class="container">
         <div class="logo">
-            <img src="/static/parkview_logo.png" alt="Parkview Logo">
+            <img src="/static/ywca_logo.png" alt="YWCA Logo">
         </div>
-        <h1>ResidenceReminder: Rent Notice Generator</h1>
+        <h1>Rent Reminder Notice Generator</h1>
         
         <form id="reminderForm">
             <div class="form-group">
@@ -529,21 +529,21 @@ if __name__ == '__main__':
             </div>
             
             <div class="form-group">
-                <label for="unit_number">Unit Number:</label>
-                <input type="text" id="unit_number" name="unit_number" placeholder="e.g. 204">
+                <label for="room_number">Room/Unit Number:</label>
+                <input type="text" id="room_number" name="room_number" placeholder="e.g. B-204">
             </div>
             
             <div class="form-group">
-                <label for="amount_due">Amount Due ($):</label>
-                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 1,500">
+                <label for="amount_due">Amount Due (KES):</label>
+                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 15,000">
             </div>
             
             <div class="form-group">
                 <label for="due_date">Due Date:</label>
                 <select id="due_date" name="due_date">
-                    <option value="1st" selected>1st</option>
+                    <option value="1st">1st</option>
                     <option value="5th">5th</option>
-                    <option value="10th">10th</option>
+                    <option value="10th" selected>10th</option>
                     <option value="15th">15th</option>
                     <option value="end of the month">End of the month</option>
                 </select>
@@ -563,7 +563,7 @@ if __name__ == '__main__':
         </div>
         
         <footer>
-            &copy; 2025 ResidenceReminder. All rights reserved.
+            &copy; 2025 YWCA Kenya. All rights reserved.
         </footer>
     </div>
     
@@ -571,7 +571,7 @@ if __name__ == '__main__':
         function getFormData() {
             return {
                 resident_name: document.getElementById('resident_name').value || 'Resident',
-                unit_number: document.getElementById('unit_number').value,
+                room_number: document.getElementById('room_number').value,
                 amount_due: document.getElementById('amount_due').value,
                 due_date: document.getElementById('due_date').value
             };

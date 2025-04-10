@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YWCA Rent Reminder Generator</title>
+    <title>ResidenceReminder - Rent Notice Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,7 +23,7 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #0055a4;
+            color: #336699;
             text-align: center;
             margin-bottom: 30px;
         }
@@ -48,7 +48,7 @@
             margin-top: 20px;
         }
         button {
-            background-color: #0055a4;
+            background-color: #336699;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -57,7 +57,7 @@
             font-size: 16px;
         }
         button:hover {
-            background-color: #003d7a;
+            background-color: #264d73;
         }
         .preview {
             margin-top: 30px;
@@ -90,9 +90,9 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="/static/ywca_logo.png" alt="YWCA Logo">
+            <img src="/static/parkview_logo.png" alt="Parkview Logo">
         </div>
-        <h1>Rent Reminder Notice Generator</h1>
+        <h1>ResidenceReminder: Rent Notice Generator</h1>
         
         <form id="reminderForm">
             <div class="form-group">
@@ -101,21 +101,21 @@
             </div>
             
             <div class="form-group">
-                <label for="room_number">Room/Unit Number:</label>
-                <input type="text" id="room_number" name="room_number" placeholder="e.g. B-204">
+                <label for="unit_number">Unit Number:</label>
+                <input type="text" id="unit_number" name="unit_number" placeholder="e.g. 204">
             </div>
             
             <div class="form-group">
-                <label for="amount_due">Amount Due (KES):</label>
-                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 15,000">
+                <label for="amount_due">Amount Due ($):</label>
+                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 1,500">
             </div>
             
             <div class="form-group">
                 <label for="due_date">Due Date:</label>
                 <select id="due_date" name="due_date">
-                    <option value="1st">1st</option>
+                    <option value="1st" selected>1st</option>
                     <option value="5th">5th</option>
-                    <option value="10th" selected>10th</option>
+                    <option value="10th">10th</option>
                     <option value="15th">15th</option>
                     <option value="end of the month">End of the month</option>
                 </select>
@@ -135,7 +135,7 @@
         </div>
         
         <footer>
-            &copy; 2025 YWCA Kenya. All rights reserved.
+            &copy; 2025 ResidenceReminder. All rights reserved.
         </footer>
     </div>
     
@@ -143,7 +143,7 @@
         function getFormData() {
             return {
                 resident_name: document.getElementById('resident_name').value || 'Resident',
-                room_number: document.getElementById('room_number').value,
+                unit_number: document.getElementById('unit_number').value,
                 amount_due: document.getElementById('amount_due').value,
                 due_date: document.getElementById('due_date').value
             };
