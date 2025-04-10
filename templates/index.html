@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YWCA Rent Reminder Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0055a4;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #0055a4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #003d7a;
+        }
+        .preview {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .preview img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .preview-container {
+            display: none;
+            margin-top: 30px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/ywca_logo.png" alt="YWCA Logo">
+        </div>
+        <h1>Rent Reminder Notice Generator</h1>
+        
+        <form id="reminderForm">
+            <div class="form-group">
+                <label for="resident_name">Resident Name:</label>
+                <input type="text" id="resident_name" name="resident_name" placeholder="Enter resident name" value="Resident">
+            </div>
+            
+            <div class="form-group">
+                <label for="room_number">Room/Unit Number:</label>
+                <input type="text" id="room_number" name="room_number" placeholder="e.g. B-204">
+            </div>
+            
+            <div class="form-group">
+                <label for="amount_due">Amount Due (KES):</label>
+                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 15,000">
+            </div>
+            
+            <div class="form-group">
+                <label for="due_date">Due Date:</label>
+                <select id="due_date" name="due_date">
+                    <option value="1st">1st</option>
+                    <option value="5th">5th</option>
+                    <option value="10th" selected>10th</option>
+                    <option value="15th">15th</option>
+                    <option value="end of the month">End of the month</option>
+                </select>
+            </div>
+            
+            <div class="buttons">
+                <button type="button" onclick="previewReminder()">Preview Notice</button>
+                <button type="button" onclick="downloadReminder()">Download Notice</button>
+            </div>
+        </form>
+        
+        <div id="previewContainer" class="preview-container">
+            <h3>Preview:</h3>
+            <div class="preview">
+                <img id="previewImage" src="" alt="Rent Reminder Preview">
+            </div>
+        </div>
+        
+        <footer>
+            &copy; 2025 YWCA Kenya. All rights reserved.
+        </footer>
+    </div>
+    
+    <script>
+        function getFormData() {
+            return {
+                resident_name: document.getElementById('resident_name').value || 'Resident',
+                room_number: document.getElementById('room_number').value,
+                amount_due: document.getElementById('amount_due').value,
+                due_date: document.getElementById('due_date').value
+            };
+        }
+        
+        function previewReminder() {
+            const formData = getFormData();
+            
+            // Create form data for submission
+            const data = new FormData();
+            Object.keys(formData).forEach(key => {
+                data.append(key, formData[key]);
+            });
+            
+            // Generate a unique cache-busting parameter
+            const cacheBuster = new Date().getTime();
+            
+            // Set preview image source with form data as query params
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+            
+            // Submit form to preview endpoint
+            fetch('/preview', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const imageUrl = URL.createObjectURL(blob);
+                previewImage.src = imageUrl;
+                previewContainer.style.display = 'block';
+                
+                // Scroll to preview
+                previewContainer.scrollIntoView({ behavior: 'smooth' });
+            })
+            .catch(error => {
+                console.error('Error generating preview:', error);
+                alert('Error generating preview. Please try again.');
+            });
+        }
+        
+        function downloadReminder() {
+            const formData = getFormData();
+            
+            // Create a hidden form for submission
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/generate';
+            form.style.display = 'none';
+            
+            // Add form fields
+            Object.keys(formData).forEach(key => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = formData[key];
+                form.appendChild(input);
+            });
+            
+            // Add form to document and submit
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+    </script>
+</body>
+</html>
+        
