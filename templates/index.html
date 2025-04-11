@@ -94,7 +94,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="/static/parkview_logo.png" alt="Parkview Logo">
+            <img src="/static/brandon_logo.png" alt="Parkview Logo">
         </div>
         <h1>ResidenceReminder: Rent Notice Generator</h1>
         
@@ -110,8 +110,8 @@
             </div>
             
             <div class="form-group">
-                <label for="amount_due">Amount Due ($):</label>
-                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 1,500">
+                <label for="amount_due">Amount Due (KSH):</label>
+                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 11,500">
             </div>
             
             <div class="form-group">
@@ -139,7 +139,7 @@
         </div>
         
         <footer>
-            &copy; 2025 ResidenceReminder. All rights reserved.
+            &copy; {{ now.year }} ResidenceReminder. All rights reserved.
         </footer>
     </div>
     

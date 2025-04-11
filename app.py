@@ -372,7 +372,7 @@ If you have already made your payment, kindly disregard this notice and provide 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', now=datetime.now())
 
 @app.route('/generate', methods=['POST'])
 def generate_reminder():
@@ -522,7 +522,7 @@ if __name__ == '__main__':
 <body>
     <div class="container">
         <div class="logo">
-            <img src="/static/parkview_logo.png" alt="Parkview Logo">
+            <img src="/static/brandon_logo.png" alt="Parkview Logo">
         </div>
         <h1>ResidenceReminder: Rent Notice Generator</h1>
         
@@ -567,7 +567,7 @@ if __name__ == '__main__':
         </div>
         
         <footer>
-            &copy; 2025 ResidenceReminder. All rights reserved.
+            &copy; {{ now.year }} ResidenceReminder. All rights reserved.
         </footer>
     </div>
     
