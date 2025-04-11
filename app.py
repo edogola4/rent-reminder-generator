@@ -538,8 +538,8 @@ if __name__ == '__main__':
             </div>
             
             <div class="form-group">
-                <label for="amount_due">Amount Due ($):</label>
-                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 1,500">
+                <label for="amount_due">Amount Due (KSH):</label>
+                <input type="text" id="amount_due" name="amount_due" placeholder="e.g. 11,500">
             </div>
             
             <div class="form-group">
